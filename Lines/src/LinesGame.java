@@ -1,4 +1,9 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+
 import javax.swing.JFrame;
 
 public class LinesGame extends Canvas implements Runnable{
@@ -10,6 +15,14 @@ public class LinesGame extends Canvas implements Runnable{
 	private boolean _running = false;
 	private int _currentFps = 0;
 	
+	private Background _background;
+	private Field _field;
+	
+	private int _fieldX;
+	private int _fieldY;
+
+	private BufferedImage _image;
+		
 	public static void main(String[] args) {
 		LinesGame linesGame = new LinesGame();
 		Dimension windowDim = new Dimension(
@@ -18,7 +31,7 @@ public class LinesGame extends Canvas implements Runnable{
 		linesGame.setPreferredSize(windowDim);
 		linesGame.setMinimumSize(windowDim);
 		linesGame.setMaximumSize(windowDim);
-		
+				
 		JFrame frame = new JFrame(_settings.getString("WindowTitle", "NoTitle"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(linesGame);
@@ -41,7 +54,15 @@ public class LinesGame extends Canvas implements Runnable{
 	}
 	
 	private void init() {
+		_image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		
+		_fieldX = _settings.getInteger("FieldX", 0);
+		_fieldY = _settings.getInteger("FieldY", 0);
+		
+		_background = new Background(this);
+		_field = new Field(this);
+		
+		initInputs();
 	}
 
 	@Override
@@ -84,7 +105,64 @@ public class LinesGame extends Canvas implements Runnable{
 	}
 	
 	private void runStep(double delta) {
+		tick(delta);
+		draw();
+	}
+	
+	private void tick(double delta) {
 		
 	}
+	
+	private void draw() {
+		BufferStrategy bfs = getBufferStrategy();
+		if (bfs == null) {
+			createBufferStrategy(3);
+			return;
+		}
 
+		_background.draw(_image, 0, 0);
+		_field.draw(_image, _fieldX, _fieldY);
+		
+		String fpsString = new String("FPS: " + new Integer(_currentFps).toString());
+		_image.getGraphics().drawChars(fpsString.toCharArray(), 0, fpsString.length(),
+				getWidth() - 60, 20);
+		
+		Graphics g = bfs.getDrawGraphics();
+		g.clearRect(0, 0, this.getWidth(), this.getHeight());
+		g.drawImage(_image, 0, 0, null);
+		g.dispose();
+		bfs.show();
+	}
+	
+	private void initInputs() {
+		this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("click!");
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
+			
+		});
+	}
+	
 }

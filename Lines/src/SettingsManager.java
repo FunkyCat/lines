@@ -20,8 +20,14 @@ public class SettingsManager {
 		addString("Author", "Konstantinova Antonina");
 		addString("Version","0.1");
 		addInteger("GameWidth", 600);
-		addInteger("GameHeight", 400);
-		addDouble("FPS", 60.0);
+		addInteger("GameHeight", 432 + 8 * 2);
+		addDouble("FPS", 120.0);
+		addInteger("FieldX", 8);
+		addInteger("FieldY", 8);
+		addInteger("FieldNX", 9);
+		addInteger("FieldNY", 9);
+		addInteger("FieldCellWidth", 48);
+		addInteger("FieldCellHeight", 48);
 	}
 	
 	public void addInteger(String key, Integer value) {
