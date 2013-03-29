@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 
 
@@ -12,6 +11,10 @@ public class Field implements Drawable {
 	
 	private LinesGame _linesGame;
 	private SettingsManager _settings;
+	
+	private Ball _tstBall;
+	
+	private Sprite _cellSprite;
 	
 	public Field(LinesGame linesGame) {
 		init(linesGame);
@@ -31,17 +34,21 @@ public class Field implements Drawable {
 				_state[i][j] = Cell.STATE_FREE;
 			}
 		}
+		
+		_cellSprite = new Sprite("CellBackground");
+		
+		_tstBall = new Ball();
+		_tstBall.init(Ball.TYPE_BLUE);
 	}
 	
 	@Override
 	public void draw(Graphics graphics, int dX, int dY) {
-		graphics.setColor(new Color(255, 0, 0));
-		for (int i = 0; i <= _nX; i++) {
-			graphics.drawLine(dX + i * _cellWidth, dY, dX + i * _cellWidth, dY + _nY * _cellHeight);
+		for (int i = 0; i < _nY; i++) {
+			for (int j = 0; j < _nX; j++) {
+				_cellSprite.draw(graphics, dX + j * _cellWidth, dY + i * _cellHeight);
+			}
 		}
-		for (int i = 0; i <= _nY; i++) {
-			graphics.drawLine(dX, dY + i * _cellHeight, dX + _nX * _cellWidth, dY + i * _cellHeight);
-		}
+		_tstBall.draw(graphics, dX, dY);
 	}
 
 }

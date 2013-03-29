@@ -128,8 +128,16 @@ public class LinesGame extends Canvas implements Runnable{
 		_background.draw(g, 0, 0);
 		_field.draw(g, _fieldX, _fieldY);
 		
+		drawFps(g);
+		
 		g.dispose();
 		bfs.show();
+	}
+	
+	private void drawFps(Graphics graphics) {
+		String fpsString = new String("FPS: " + new Integer(_currentFps).toString());
+		graphics.setColor(Color.white);
+		graphics.drawChars(fpsString.toCharArray(), 0, fpsString.length(), getWidth() - 50, 20);
 	}
 	
 	private void initInputs() {
