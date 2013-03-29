@@ -1,8 +1,8 @@
-import java.awt.image.BufferedImage;
+import java.awt.Graphics;
 
 public interface Drawable {
 	public int _drawX = 0;
 	public int _drawY = 0;
 	
-	public void draw(BufferedImage canvas, int dX, int dY);
+	public void draw(Graphics graphics, int dX, int dY);
 }

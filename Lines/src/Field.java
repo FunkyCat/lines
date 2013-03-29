@@ -1,5 +1,5 @@
 import java.awt.Color;
-import java.awt.image.BufferedImage;
+import java.awt.Graphics;
 
 
 public class Field implements Drawable {
@@ -34,18 +34,13 @@ public class Field implements Drawable {
 	}
 	
 	@Override
-	public void draw(BufferedImage image, int dX, int dY) {
-		Color color = new Color(255, 0, 0);
-		int rgb = color.getRGB();
+	public void draw(Graphics graphics, int dX, int dY) {
+		graphics.setColor(new Color(255, 0, 0));
 		for (int i = 0; i <= _nX; i++) {
-			for (int j = 0; j < _nY * _cellHeight; j++) {
-				image.setRGB(dX + i * _cellWidth, dY + j, rgb);
-			}
+			graphics.drawLine(dX + i * _cellWidth, dY, dX + i * _cellWidth, dY + _nY * _cellHeight);
 		}
 		for (int i = 0; i <= _nY; i++) {
-			for (int j = 0; j < _nX * _cellWidth; j++) {
-				image.setRGB(dX + j, dY + i *_cellHeight , rgb);
-			}
+			graphics.drawLine(dX, dY + i * _cellHeight, dX + _nX * _cellWidth, dY + i * _cellHeight);
 		}
 	}
 

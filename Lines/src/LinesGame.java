@@ -116,20 +116,18 @@ public class LinesGame extends Canvas implements Runnable{
 	private void draw() {
 		BufferStrategy bfs = getBufferStrategy();
 		if (bfs == null) {
-			createBufferStrategy(3);
+			createBufferStrategy(2);
+			requestFocus();
 			return;
 		}
 
-		_background.draw(_image, 0, 0);
-		_field.draw(_image, _fieldX, _fieldY);
-		
-		String fpsString = new String("FPS: " + new Integer(_currentFps).toString());
-		_image.getGraphics().drawChars(fpsString.toCharArray(), 0, fpsString.length(),
-				getWidth() - 60, 20);
-		
 		Graphics g = bfs.getDrawGraphics();
-		g.clearRect(0, 0, this.getWidth(), this.getHeight());
-		g.drawImage(_image, 0, 0, null);
+		g.setColor(Color.black);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
+		_background.draw(g, 0, 0);
+		_field.draw(g, _fieldX, _fieldY);
+		
 		g.dispose();
 		bfs.show();
 	}
