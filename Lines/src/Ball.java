@@ -11,11 +11,21 @@ public class Ball implements Drawable{
 	private static String KEY_RED = "BallRed";
 	private static String KEY_GREEN = "BallGreen";
 	private static String KEY_BLUE = "BallBlue";
+		
+	private int _fieldX;
+	private int _fieldY;
 	
 	private int _type;
 	private Image _image;
 	
 	public void init(int type) {
+		_fieldX = _fieldY = -1;
+		setType(type);
+	}
+	
+	public void init(int type, int fieldX, int fieldY) {
+		_fieldX = fieldX;
+		_fieldY = fieldY;
 		setType(type);
 	}
 	
@@ -42,6 +52,26 @@ public class Ball implements Drawable{
 			_type = TYPE_RED;
 			_image = imgMng.getImage(KEY_RED);
 		}
+	}
+	
+	public int getType() {
+		return _type;
+	}
+	
+	public void setFieldX(int fieldX) {
+		_fieldX = fieldX;
+	}
+	
+	public int getFieldX() {
+		return _fieldX;
+	}
+	
+	public void setFieldY(int fieldY) {
+		_fieldY = fieldY;
+	}
+	
+	public int getFieldY() {
+		return _fieldY;
 	}
 
 }

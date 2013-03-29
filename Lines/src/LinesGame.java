@@ -17,6 +17,7 @@ public class LinesGame extends Canvas implements Runnable{
 	
 	private Background _background;
 	private Field _field;
+	private BallFactory _ballFactory;
 	
 	private int _fieldX;
 	private int _fieldY;
@@ -42,6 +43,15 @@ public class LinesGame extends Canvas implements Runnable{
 		linesGame.start();
 	}
 	
+	public void newGame() {
+		_field.clear();
+		_field.addRandomBalls(_settings.getInteger("StartGameBalls", 3));
+	}
+	
+	public BallFactory getBallFactory() {
+		return _ballFactory;
+	}
+	
 	public void start() {
 		init();
 		
@@ -59,10 +69,15 @@ public class LinesGame extends Canvas implements Runnable{
 		_fieldX = _settings.getInteger("FieldX", 0);
 		_fieldY = _settings.getInteger("FieldY", 0);
 		
+		_ballFactory = new BallFactory();
+		_ballFactory.init(this);
+		
 		_background = new Background(this);
 		_field = new Field(this);
 		
 		initInputs();
+		
+		newGame();
 	}
 
 	@Override
@@ -127,6 +142,7 @@ public class LinesGame extends Canvas implements Runnable{
 		
 		_background.draw(g, 0, 0);
 		_field.draw(g, _fieldX, _fieldY);
+		_ballFactory.draw(g, 450, 8);
 		
 		drawFps(g);
 		

@@ -28,6 +28,8 @@ public class SettingsManager {
 		addInteger("FieldNY", 9);
 		addInteger("FieldCellWidth", 48);
 		addInteger("FieldCellHeight", 48);
+		addInteger("BallQueueSize", 3);
+		addInteger("BallQueueCellWidth", 48);
 	}
 	
 	public void addInteger(String key, Integer value) {
