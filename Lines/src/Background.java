@@ -1,8 +1,4 @@
-import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 
 public class Background implements Drawable {
 
@@ -10,7 +6,6 @@ public class Background implements Drawable {
 	private int _height;
 	
 	private LinesGame _linesGame;
-	private SettingsManager _settings;
 	
 	public Background(LinesGame linesGame) {
 		init(linesGame);
@@ -18,7 +13,6 @@ public class Background implements Drawable {
 	
 	public void init(LinesGame linesGame) {
 		_linesGame = linesGame;
-		_settings = SettingsManager.INSTANCE;
 		_width = linesGame.getWidth();
 		_height = linesGame.getHeight();
 	}

@@ -26,7 +26,6 @@ public class BallFactory implements Drawable {
 			_queue[i] = new Ball();
 			_queue[i].init(getRandomType());
 		}
-		ImagesManager imgMng = ImagesManager.INSTANCE;
 		_cellBgSprite = new Sprite("CellBackground");
 	}
 	
