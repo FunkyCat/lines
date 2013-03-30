@@ -14,6 +14,7 @@ public class LinesGame extends Canvas implements Runnable{
 	
 	private boolean _running = false;
 	private int _currentFps = 0;
+	private int _score = 0;
 	
 	private Background _background;
 	private Field _field;
@@ -21,8 +22,6 @@ public class LinesGame extends Canvas implements Runnable{
 	
 	private int _fieldX;
 	private int _fieldY;
-
-	private BufferedImage _image;
 		
 	public static void main(String[] args) {
 		LinesGame linesGame = new LinesGame();
@@ -46,6 +45,11 @@ public class LinesGame extends Canvas implements Runnable{
 	public void newGame() {
 		_field.clear();
 		_field.addRandomBalls(_settings.getInteger("StartGameBalls", 3));
+		_score = 0;
+	}
+	
+	public void score(int count) {
+		_score += 10 + (count - _settings.getInteger("MinimalLineLength", 5)) * 3;  
 	}
 	
 	public BallFactory getBallFactory() {
@@ -64,8 +68,6 @@ public class LinesGame extends Canvas implements Runnable{
 	}
 	
 	private void init() {
-		_image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		
 		_fieldX = _settings.getInteger("FieldX", 0);
 		_fieldY = _settings.getInteger("FieldY", 0);
 		
@@ -109,8 +111,8 @@ public class LinesGame extends Canvas implements Runnable{
 			deltaSum += delta;
 
 			if (System.currentTimeMillis() - fpsTimer >= 1000) {
-				System.out.println(
-						"FPS: " + frames + ", deltaSum: " + deltaSum);
+				//System.out.println(
+				//		"FPS: " + frames + ", deltaSum: " + deltaSum);
 				_currentFps = frames;
 				deltaSum = 0;
 				frames = 0;
@@ -142,7 +144,7 @@ public class LinesGame extends Canvas implements Runnable{
 		
 		_background.draw(g, 0, 0);
 		_field.draw(g, _fieldX, _fieldY);
-		_ballFactory.draw(g, 450, 8);
+		_ballFactory.draw(g, 450, 100);
 		
 		drawFps(g);
 		
@@ -150,10 +152,16 @@ public class LinesGame extends Canvas implements Runnable{
 		bfs.show();
 	}
 	
+	private void click(int mouseX, int mouseY) {
+		_field.click(mouseX, mouseY, _fieldX, _fieldY);
+	}
+	
 	private void drawFps(Graphics graphics) {
-		String fpsString = new String("FPS: " + new Integer(_currentFps).toString());
+		String fpsString = new String("FPS: " + _currentFps);
 		graphics.setColor(Color.white);
 		graphics.drawChars(fpsString.toCharArray(), 0, fpsString.length(), getWidth() - 50, 20);
+		String scoreString = new String("Score: " + _score);
+		graphics.drawChars(scoreString.toCharArray(), 0, scoreString.length(), getWidth() - 150, 50);
 	}
 	
 	private void initInputs() {
@@ -161,28 +169,20 @@ public class LinesGame extends Canvas implements Runnable{
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("click!");
+				click(e.getX(), e.getY());
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				
-			}
+			public void mouseEntered(MouseEvent e) { }
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				
-			}
+			public void mouseExited(MouseEvent e) { }
 
 			@Override
-			public void mousePressed(MouseEvent e) {
-				
-			}
+			public void mousePressed(MouseEvent e) { }
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				
-			}
+			public void mouseReleased(MouseEvent e) { }
 			
 		});
 	}

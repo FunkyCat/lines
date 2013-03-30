@@ -42,6 +42,7 @@ public class ImagesManager {
 
 	public void loadAllImages() {
 		loadImage("cellBg.png", "CellBackground");
+		loadImage("cellBgSelected.png", "CellBackgroundSelected");
 		
 		loadImage("ballRed.png", "BallRed");
 		loadImage("ballGreen.png", "BallGreen");
