@@ -97,7 +97,7 @@ public class Field implements Drawable, Clickable{
 					_state[_selectedCellY][_selectedCellX] = null;
 					_selectedBall = null;
 					_selectedCellX = _selectedCellY = -1;
-					checkMove(cellY, cellX);
+					checkMove(cellY, cellX, true);
 				}
 			}
 		}
@@ -107,7 +107,7 @@ public class Field implements Drawable, Clickable{
 		return true;
 	}
 	
-	private void checkMove(int cellY, int cellX) {
+	private void checkMove(int cellY, int cellX, boolean addNew) {
 		int type = _state[cellY][cellX].getType();
 		ArrayList<Point> cells = new ArrayList<Point>();
 		int counter = 0;
@@ -154,7 +154,7 @@ public class Field implements Drawable, Clickable{
 				_state[cells.get(i).y][cells.get(i).x] = null; 
 			}
 			_linesGame.score(cells.size());
-		} else {
+		} else if (addNew){
 			addRandomBalls(_moveBallsCount);
 		}
 	}
@@ -177,6 +177,7 @@ public class Field implements Drawable, Clickable{
 					_state[rndY][rndX] = _ballFactory.getNextBall();
 					_state[rndY][rndX].setFieldX(rndX);
 					_state[rndY][rndX].setFieldY(rndY);
+					checkMove(rndY, rndX, false);
 					break;
 				}
 			}
