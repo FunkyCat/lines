@@ -30,6 +30,13 @@ public class SettingsManager {
 		addInteger("FieldCellHeight", 48);
 		addInteger("BallQueueSize", 3);
 		addInteger("BallQueueCellWidth", 48);
+		addInteger("GuiGameOverX", (9 * 48) / 2 - (300 / 2) + 8);
+		addInteger("GuiGameOverY", (9 * 48) / 2 - (180 / 2) + 8);
+		addInteger("MoveBallsCount", 3);
+		addInteger("BallFactoryX", (9 * 48) + 8 + (600 - 9 * 48 - 8 - 3 * 48) / 2 + 4);
+		addInteger("BallFactoryY", (2 * 48) + 8);
+		addInteger("GuiNewGameX", (9 * 48) + 8 + (600 - 9 * 48 - 8 - 150) / 2 + 4);
+		addInteger("GuiNewGameY", 48 * 9 + 8 - 50);
 	}
 	
 	public void addInteger(String key, Integer value) {

@@ -16,13 +16,23 @@ public class LinesGame extends Canvas implements Runnable{
 	private int _score = 0;
 	
 	private GameLogic _gameLogic;
+	private boolean _isGameOver;
 	
 	private Background _background;
 	private Field _field;
 	private BallFactory _ballFactory;
 	
+	private GuiGameOver _guiGameOver;
+	private GuiNewGame _guiNewGame;
+	
 	private int _fieldX;
 	private int _fieldY;
+	private int _guiGameOverX;
+	private int _guiGameOverY;
+	private int _guiNewGameX;
+	private int _guiNewGameY;
+	private int _ballFactoryX;
+	private int _ballFactoryY;
 		
 	public static void main(String[] args) {
 		LinesGame linesGame = new LinesGame();
@@ -47,6 +57,11 @@ public class LinesGame extends Canvas implements Runnable{
 		_gameLogic.clear();
 		_gameLogic.addRandomBalls(_settings.getInteger("StartGameBalls", 3));
 		_score = 0;
+		_isGameOver = false;
+	}
+	
+	public void gameOver() {
+		_isGameOver = true;
 	}
 	
 	public void score(int count) {
@@ -79,6 +94,18 @@ public class LinesGame extends Canvas implements Runnable{
 		
 		_background = new Background(this);
 		_field = new Field(this);
+		
+		_guiGameOver = new GuiGameOver();
+		_guiGameOverX = _settings.getInteger("GuiGameOverX", 74);
+		_guiGameOverY = _settings.getInteger("GuiGameOverY", 134);
+		
+		_guiNewGame = new GuiNewGame();
+		_guiNewGame.init(this);
+		_guiNewGameX = _settings.getInteger("GuiNewGameX", 74);
+		_guiNewGameY = _settings.getInteger("GuiNewGameY", 300);
+		
+		_ballFactoryX = _settings.getInteger("BallFactoryX", 452);
+		_ballFactoryY = _settings.getInteger("BallFactoryY", 152);
 		
 		initInputs();
 		
@@ -142,7 +169,13 @@ public class LinesGame extends Canvas implements Runnable{
 		
 		_background.draw(g, 0, 0);
 		_field.draw(g, _fieldX, _fieldY);
-		_ballFactory.draw(g, 450, 100);
+		_ballFactory.draw(g, _ballFactoryX, _ballFactoryY);
+		
+		if (_isGameOver) {
+			_guiGameOver.draw(g, _guiGameOverX, _guiGameOverY);
+		}
+		
+		_guiNewGame.draw(g, _guiNewGameX, _guiNewGameY);
 		
 		drawFps(g);
 		
@@ -151,7 +184,10 @@ public class LinesGame extends Canvas implements Runnable{
 	}
 	
 	private void click(int mouseX, int mouseY) {
-		_field.click(mouseX, mouseY, _fieldX, _fieldY);
+		if (!_isGameOver) {
+			_field.click(mouseX, mouseY, _fieldX, _fieldY);
+		}
+		_guiNewGame.click(mouseX, mouseY, _guiNewGameX, _guiNewGameY);
 	}
 	
 	private void drawFps(Graphics graphics) {

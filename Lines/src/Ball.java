@@ -7,10 +7,12 @@ public class Ball implements Drawable{
 	public static final int TYPE_RED = 0;
 	public static final int TYPE_GREEN = 1;
 	public static final int TYPE_BLUE = 2;
+	public static final int TYPE_ANY = 3;
 	
 	private static String KEY_RED = "BallRed";
 	private static String KEY_GREEN = "BallGreen";
 	private static String KEY_BLUE = "BallBlue";
+	private static String KEY_ANY = "BallAny";
 		
 	private int _fieldX;
 	private int _fieldY;
@@ -47,6 +49,9 @@ public class Ball implements Drawable{
 			break;
 		case TYPE_BLUE:
 			_image = imgMng.getImage(KEY_BLUE);
+			break;
+		case TYPE_ANY:
+			_image = imgMng.getImage(KEY_ANY);
 			break;
 		default:
 			_type = TYPE_RED;

@@ -47,6 +47,10 @@ public class ImagesManager {
 		loadImage("ballRed.png", "BallRed");
 		loadImage("ballGreen.png", "BallGreen");
 		loadImage("ballBlue.png", "BallBlue");
+		loadImage("ballAny.png", "BallAny");
+		
+		loadImage("gameOver.png", "GuiGameOver");
+		loadImage("newGame.png", "GuiNewGame");
 	}
 	
 }
