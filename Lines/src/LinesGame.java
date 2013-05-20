@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
@@ -15,6 +14,8 @@ public class LinesGame extends Canvas implements Runnable{
 	private boolean _running = false;
 	private int _currentFps = 0;
 	private int _score = 0;
+	
+	private GameLogic _gameLogic;
 	
 	private Background _background;
 	private Field _field;
@@ -43,8 +44,8 @@ public class LinesGame extends Canvas implements Runnable{
 	}
 	
 	public void newGame() {
-		_field.clear();
-		_field.addRandomBalls(_settings.getInteger("StartGameBalls", 3));
+		_gameLogic.clear();
+		_gameLogic.addRandomBalls(_settings.getInteger("StartGameBalls", 3));
 		_score = 0;
 	}
 	
@@ -71,6 +72,8 @@ public class LinesGame extends Canvas implements Runnable{
 		_fieldX = _settings.getInteger("FieldX", 0);
 		_fieldY = _settings.getInteger("FieldY", 0);
 		
+		_gameLogic = new GameLogic(this);
+		
 		_ballFactory = new BallFactory();
 		_ballFactory.init(this);
 		
@@ -91,7 +94,6 @@ public class LinesGame extends Canvas implements Runnable{
 		long lastNs;
 		long nsToSleep = 0;
 		double delta = 0;
-		double deltaSum = 0;
 
 		while (_running) {
 			lastNs = System.nanoTime();
@@ -108,13 +110,9 @@ public class LinesGame extends Canvas implements Runnable{
 				}
 			}
 			delta = (double) (System.nanoTime() - lastNs) / 1000000000;
-			deltaSum += delta;
-
+			
 			if (System.currentTimeMillis() - fpsTimer >= 1000) {
-				//System.out.println(
-				//		"FPS: " + frames + ", deltaSum: " + deltaSum);
 				_currentFps = frames;
-				deltaSum = 0;
 				frames = 0;
 				fpsTimer = System.currentTimeMillis();
 			}
@@ -185,6 +183,10 @@ public class LinesGame extends Canvas implements Runnable{
 			public void mouseReleased(MouseEvent e) { }
 			
 		});
+	}
+	
+	public GameLogic getGameLogic() {
+		return _gameLogic;
 	}
 	
 }
